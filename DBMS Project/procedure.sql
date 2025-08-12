@@ -1,0 +1,93 @@
+CREATE SEQUENCE customer_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER customer_id_trigger
+BEFORE INSERT ON CUSTOMERS
+FOR EACH ROW
+WHEN (NEW.customer_id IS NULL)
+BEGIN
+    SELECT customer_seq.NEXTVAL INTO :NEW.customer_id FROM DUAL;
+END;
+/
+
+
+CREATE SEQUENCE emp_id_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER emp_id_trigger
+BEFORE INSERT ON Employees
+FOR EACH ROW
+WHEN (NEW.employee_id IS NULL)
+BEGIN
+    SELECT emp_id_seq.NEXTVAL INTO :NEW.employee_id FROM DUAL;
+END;
+/
+
+
+
+CREATE SEQUENCE service_id_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER trg_service_id
+BEFORE INSERT ON Services
+FOR EACH ROW
+BEGIN
+    IF :NEW.service_id IS NULL THEN
+        SELECT service_id_seq.NEXTVAL INTO :NEW.service_id FROM DUAL;
+    END IF;
+END;
+/
+
+
+CREATE SEQUENCE order_id_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER trg_order_id
+BEFORE INSERT ON Orders
+FOR EACH ROW
+BEGIN
+    :NEW.order_id := order_id_seq.NEXTVAL;
+END;
+/
+
+CREATE SEQUENCE payment_id_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER trg_payment_id
+BEFORE INSERT ON Payments
+FOR EACH ROW
+BEGIN
+    :NEW.payment_id := payment_id_seq.NEXTVAL;
+END;
+/
+
+
+CREATE SEQUENCE assignment_id_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER trg_assignment_id
+BEFORE INSERT ON Assignments
+FOR EACH ROW
+BEGIN
+    :NEW.assignment_id := assignment_id_seq.NEXTVAL;
+END;
+/
+
+
+CREATE SEQUENCE order_item_id_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE OR REPLACE TRIGGER trg_order_item_id
+BEFORE INSERT ON OrderItems
+FOR EACH ROW
+BEGIN
+    :NEW.order_item_id := order_item_id_seq.NEXTVAL;
+END;
+/
